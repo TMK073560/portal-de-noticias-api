@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Registro{% endblock %}
+
+{% block content %}
+<section class="formulario">
+    <h1>Crear cuenta</h1>
+    <p>Los usuarios normales pueden acceder al portal, pero no modificar noticias.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="campo">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+
+                {% if field.help_text %}
+                    <small>{{ field.help_text|safe }}</small>
+                {% endif %}
+
+                {% for error in field.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button class="boton" type="submit">Registrarme</button>
+    </form>
+</section>
+{% endblock %}

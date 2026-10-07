@@ -1,0 +1,33 @@
+@base_url = http://127.0.0.1:8000
+
+### Listar noticias
+GET {{base_url}}/api/noticias/
+
+### Detalle de una noticia
+GET {{base_url}}/api/noticias/1/
+
+### Crear noticia
+# Para escritura usa autenticación desde Postman o DRF browsable API.
+POST {{base_url}}/api/noticias/
+Content-Type: application/json
+
+{
+  "titulo": "Noticia de prueba",
+  "url_imagen": "https://example.com/noticia.jpg",
+  "descripcion": "Contenido de prueba",
+  "publicada": true
+}
+
+### Mis noticias
+GET {{base_url}}/api/noticias/mias/
+
+### Editar parcialmente
+PATCH {{base_url}}/api/noticias/1/
+Content-Type: application/json
+
+{
+  "titulo": "Título actualizado"
+}
+
+### Borrar
+DELETE {{base_url}}/api/noticias/1/

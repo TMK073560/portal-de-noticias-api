@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Noticias | El Faro Digital{% endblock %}
+
+{% block content %}
+<section class="portada">
+    <div>
+        <p class="seccion">ACTUALIDAD</p>
+        <h1>Últimas noticias</h1>
+        <p>Información, actualidad y noticias destacadas.</p>
+    </div>
+
+    {% if user.is_staff %}
+        <a class="boton" href="{% url 'noticia-create' %}">Publicar noticia</a>
+    {% endif %}
+</section>
+
+{% if noticias %}
+<section class="rejilla">
+    {% for noticia in noticias %}
+        <article class="noticia-card">
+            <a href="{% url 'noticia-detail' noticia.pk %}">
+                <img src="{{ noticia.url_imagen }}" alt="{{ noticia.titulo }}">
+            </a>
+
+            <div class="contenido-card">
+                <p class="meta">
+                    {{ noticia.creada|date:"d/m/Y H:i" }} · {{ noticia.autor.username }}
+                </p>
+
+                <h2>
+                    <a href="{% url 'noticia-detail' noticia.pk %}">
+                        {{ noticia.titulo }}
+                    </a>
+                </h2>
+
+                {% if noticia.descripcion %}
+                    <p>{{ noticia.descripcion|truncatewords:28 }}</p>
+                {% endif %}
+
+                <div class="acciones">
+                    <a class="boton secundario" href="{% url 'noticia-detail' noticia.pk %}">
+                        Leer noticia
+                    </a>
+
+                    {% if user.is_staff and user == noticia.autor %}
+                        <a class="boton secundario" href="{% url 'noticia-update' noticia.pk %}">
+                            Editar
+                        </a>
+                        <a class="boton peligro" href="{% url 'noticia-delete' noticia.pk %}">
+                            Borrar
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+    {% endfor %}
+</section>
+{% else %}
+<section class="mensaje-vacio">
+    <h2>No hay noticias publicadas.</h2>
+</section>
+{% endif %}
+{% endblock %}

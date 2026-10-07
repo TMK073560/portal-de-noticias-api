@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}El Faro Digital{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+<header class="cabecera">
+    <div class="contenedor barra">
+        <a class="logo" href="{% url 'noticia-list' %}">EL FARO DIGITAL</a>
+
+        <nav>
+            <a href="{% url 'noticia-list' %}">Noticias</a>
+
+            {% if user.is_authenticated %}
+                <span class="usuario">{{ user.username }}</span>
+
+                {% if user.is_staff %}
+                    <a href="{% url 'noticia-create' %}">Publicar</a>
+                    <a href="{% url 'admin:index' %}">Admin</a>
+                {% endif %}
+
+                <form class="logout" method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Ingresar</a>
+                <a href="{% url 'register' %}">Registrarse</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<main class="contenedor principal">
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <div class="contenedor">
+        <p>El Faro Digital · Portal de Noticias</p>
+    </div>
+</footer>
+</body>
+</html>

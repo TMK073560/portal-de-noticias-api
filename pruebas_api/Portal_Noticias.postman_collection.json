@@ -1,0 +1,154 @@
+{
+  "info": {
+    "_postman_id": "portal-noticias-drf",
+    "name": "Portal de Noticias API",
+    "description": "Colección de pruebas para la API REST del Portal de Noticias. Las peticiones de escritura usan Basic Auth con un usuario staff.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "noticia_id",
+      "value": "1"
+    },
+    {
+      "key": "username",
+      "value": "moderador"
+    },
+    {
+      "key": "password",
+      "value": "CAMBIAR_CON_TU_CLAVE"
+    }
+  ],
+  "item": [
+    {
+      "name": "GET - Listar noticias",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/api/noticias/"
+      }
+    },
+    {
+      "name": "GET - Detalle noticia",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/api/noticias/{{noticia_id}}/"
+      }
+    },
+    {
+      "name": "POST - Crear noticia (Staff)",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{username}}",
+              "type": "string"
+            },
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Nueva noticia desde Postman\",\n  \"url_imagen\": \"https://example.com/noticia.jpg\",\n  \"descripcion\": \"Creada desde Postman para probar la API.\",\n  \"publicada\": true\n}"
+        },
+        "url": "{{base_url}}/api/noticias/"
+      }
+    },
+    {
+      "name": "PATCH - Editar noticia propia",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{username}}",
+              "type": "string"
+            },
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Título actualizado desde Postman\"\n}"
+        },
+        "url": "{{base_url}}/api/noticias/{{noticia_id}}/"
+      }
+    },
+    {
+      "name": "GET - Mis noticias",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{username}}",
+              "type": "string"
+            },
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/api/noticias/mias/"
+      }
+    },
+    {
+      "name": "DELETE - Borrar noticia propia",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{username}}",
+              "type": "string"
+            },
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": "{{base_url}}/api/noticias/{{noticia_id}}/"
+      }
+    }
+  ]
+}
